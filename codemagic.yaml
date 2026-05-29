@@ -1,29 +1,18 @@
 workflows:
-  android-apk-build:
-    name: Android APK Build
-
-    max_build_duration: 60
+  docker-build:
+    name: Docker Build
 
     environment:
-      java: 17
+      docker: true
 
     scripts:
-      - name: Show Flutter version
-        script: |
-          flutter --version
+      - name: Check files
+        script: ls -la
 
-      - name: Get Flutter packages
+      - name: Build system
         script: |
-          flutter pub get
-
-      - name: Build APK
-        script: |
-          flutter build apk --release
+          chmod +x build-all.sh
+          ./build-all.sh
 
     artifacts:
-      - build/app/outputs/flutter-apk/*.apk
-
-    publishing:
-      email:
-        recipients:
-          - prince.ar.abdur.rahman2008@gmail.com
+      - "**/*.log"
